@@ -31,9 +31,15 @@ class HandleInertiaRequests extends Middleware
     {
         return [
             ...parent::share($request),
+            'logo' => $this->getLogo(),
             'auth' => [
                 'user' => $request->user(),
             ],
         ];
+    }
+
+    private function getLogo(): string
+    {
+        return asset('assets/img/todologored.png');
     }
 }
