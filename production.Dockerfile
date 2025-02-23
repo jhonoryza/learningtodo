@@ -13,10 +13,10 @@ RUN curl -fsSL https://bun.sh/install | bash
 ENV PATH="/root/.bun/bin:${PATH}"
 
 # Install Node.js dependencies using Bun
-RUN bun install
+RUN bun install --frozen-lockfile
 
 # Build the application
-RUN bun run build
+RUN bun run build --verbose
 
 # Final stage
 FROM jhonoryza/frankenphp-pgsql:8.2
