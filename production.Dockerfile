@@ -9,7 +9,6 @@ RUN composer install --no-dev --optimize-autoloader --no-interaction --no-plugin
 
 # Install bun
 RUN curl -fsSL https://bun.sh/install | bash
-RUN source ~/.bashrc
 
 RUN bun i
 RUN bun build
