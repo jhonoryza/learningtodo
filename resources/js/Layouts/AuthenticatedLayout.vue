@@ -5,17 +5,21 @@ const showingNavigationDropdown = ref(false);
 
 import AppSidebar from '@/components/AppSidebar.vue';
 import {
+    SidebarInset,
     SidebarProvider,
-    SidebarTrigger,
 } from '@/components/ui/sidebar'; /* PartiallyEnd: #3632/scriptSetup.vue */
 </script>
 
 <template>
     <SidebarProvider>
         <AppSidebar />
-        <SidebarTrigger />
-        <main class="min-h-screen w-full p-2">
-            <slot />
-        </main>
+        <SidebarInset>
+            <header class="flex h-16 shrink-0 items-center gap-2 border-b px-4" v-if="$slots.header">
+                <slot name="header" />
+            </header>
+            <main class="min-h-screen w-full p-2">
+                <slot />
+            </main>
+        </SidebarInset>
     </SidebarProvider>
 </template>

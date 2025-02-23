@@ -1,4 +1,9 @@
 <script setup lang="ts">
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import { Head } from '@inertiajs/vue3';
+import {
+    SidebarTrigger,
+} from '@/components/ui/sidebar'; /* PartiallyEnd: #3632/scriptSetup.vue */
 import {
     Breadcrumb,
     BreadcrumbItem,
@@ -6,10 +11,8 @@ import {
     BreadcrumbList,
     BreadcrumbPage,
     BreadcrumbSeparator,
-} from '@/components/ui/breadcrumb'; /* PartiallyEnd: #3632/scriptSetup.vue */
-import { Button } from '@/components/ui/button'; /* PartiallyEnd: #3632/scriptSetup.vue */
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head } from '@inertiajs/vue3';
+} from '@/components/ui/breadcrumb';
+import { Separator } from '@/components/ui/separator';
 </script>
 
 <template>
@@ -17,19 +20,21 @@ import { Head } from '@inertiajs/vue3';
     <Head title="Dashboard" />
 
     <AuthenticatedLayout>
-        <div class="py-12">
-            <div class="mx-auto max-w-7xl space-y-6 sm:px-6 lg:px-8">
-                <Breadcrumb>
-                    <BreadcrumbList>
-                        <BreadcrumbItem>
-                            <BreadcrumbLink :href="route('dashboard')">
-                                Dashboard
-                            </BreadcrumbLink>
-                        </BreadcrumbItem>
-                    </BreadcrumbList>
-                </Breadcrumb>
-                <Button>Test</Button>
-            </div>
+        <template #header>
+            <SidebarTrigger class="-ml-1" />
+            <Separator orientation="vertical" class="mr-2 h-4" />
+            <Breadcrumb>
+                <BreadcrumbList>
+                    <BreadcrumbItem class="hidden md:block">
+                        <BreadcrumbLink :href="route('dashboard')">
+                            Home
+                        </BreadcrumbLink>
+                    </BreadcrumbItem>
+                </BreadcrumbList>
+            </Breadcrumb>
+        </template>
+        <div class="mx-auto max-w-7xl space-y-6 sm:px-6 lg:px-8">
+            <p>Home</p>
         </div>
     </AuthenticatedLayout>
 </template>
