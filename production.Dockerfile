@@ -21,7 +21,7 @@ COPY . .
 COPY --from=composer /app/vendor /app/vendor
 
 # Install Node.js dependencies menggunakan Bun
-RUN bun install --frozen-lockfile
+RUN bun install
 
 # Build the application
 RUN bun run build
