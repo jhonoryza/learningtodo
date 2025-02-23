@@ -7,11 +7,10 @@ COPY . ./
 # Install dependencies menggunakan Composer
 RUN composer install --no-dev --optimize-autoloader --no-interaction --no-plugins --no-scripts --prefer-dist
 
-# Install Node.js and npm
-RUN curl -fsSL https://nodejs.org/dist/v20.14.0/node-v20.14.0-linux-x64.tar.xz | tar -xJ -C /usr/local --strip-components=1
+# Install bun
+RUN curl -fsSL https://bun.sh/install | bash
+RUN source ~/.bashrc
 
-# Install npm dependencies and build assets
-RUN npm install -g bun
 RUN bun i
 RUN bun build
 
