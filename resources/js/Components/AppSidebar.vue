@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import ApplicationLogo from '@/Components/ApplicationLogo.vue';
+import ApplicationLogo from '@/components/ApplicationLogo.vue';
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -7,7 +7,7 @@ import {
     DropdownMenuTrigger,
     DropdownMenuSeparator,
     DropdownMenuLabel,
-} from '@/Components/ui/dropdown-menu';
+} from '@/components/ui/dropdown-menu';
 import {
     Sidebar,
     SidebarContent,
@@ -23,12 +23,12 @@ import {
     SidebarMenuSub,
     SidebarMenuSubButton,
     SidebarMenuSubItem,
-} from '@/Components/ui/sidebar';
+} from '@/components/ui/sidebar';
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from '@/Components/ui/collapsible';
+} from '@/components/ui/collapsible';
 import { Link } from '@inertiajs/vue3';
 import {
     ChevronsUpDown,
