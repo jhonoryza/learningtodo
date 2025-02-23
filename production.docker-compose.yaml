@@ -1,0 +1,18 @@
+services:
+  learningtodo:
+    image: "jhonoryza/learningtodo:latest"
+    restart: unless-stopped
+    volumes:
+      - ./env:/app/.env
+    networks:
+      - tunnel_default
+      - postgres
+      - redis_default
+
+networks:
+  tunnel_default:
+    external: true
+  postgres:
+    external: true
+  redis_default:
+    external: true
