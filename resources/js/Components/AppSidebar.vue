@@ -7,7 +7,7 @@ import {
     DropdownMenuTrigger,
     DropdownMenuSeparator,
     DropdownMenuLabel,
-} from '@/components/ui/dropdown-menu';
+} from '@/Components/ui/dropdown-menu';
 import {
     Sidebar,
     SidebarContent,
@@ -23,12 +23,12 @@ import {
     SidebarMenuSub,
     SidebarMenuSubButton,
     SidebarMenuSubItem,
-} from '@/components/ui/sidebar';
+} from '@/Components/ui/sidebar';
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from '@/components/ui/collapsible';
+} from '@/Components/ui/collapsible';
 import { Link } from '@inertiajs/vue3';
 import {
     ChevronsUpDown,

@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { Separator } from '@/components/ui/separator';
+import { Separator } from '@/Components/ui/separator';
 import {
     SidebarTrigger,
-} from '@/components/ui/sidebar'; /* PartiallyEnd: #3632/scriptSetup.vue */
+} from '@/Components/ui/sidebar'; /* PartiallyEnd: #3632/scriptSetup.vue */
 import {
     Breadcrumb,
     BreadcrumbItem,
@@ -10,7 +10,7 @@ import {
     BreadcrumbList,
     BreadcrumbPage,
     BreadcrumbSeparator,
-} from '@/components/ui/breadcrumb'; /* PartiallyEnd: #3632/scriptSetup.vue */
+} from '@/Components/ui/breadcrumb'; /* PartiallyEnd: #3632/scriptSetup.vue */
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import DeleteUserForm from './Partials/DeleteUserForm.vue';

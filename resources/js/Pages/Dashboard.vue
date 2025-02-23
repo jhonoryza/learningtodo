@@ -3,7 +3,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import {
     SidebarTrigger,
-} from '@/components/ui/sidebar'; /* PartiallyEnd: #3632/scriptSetup.vue */
+} from '@/Components/ui/sidebar'; /* PartiallyEnd: #3632/scriptSetup.vue */
 import {
     Breadcrumb,
     BreadcrumbItem,
@@ -11,8 +11,8 @@ import {
     BreadcrumbList,
     BreadcrumbPage,
     BreadcrumbSeparator,
-} from '@/components/ui/breadcrumb';
-import { Separator } from '@/components/ui/separator';
+} from '@/Components/ui/breadcrumb';
+import { Separator } from '@/Components/ui/separator';
 </script>
 
 <template>

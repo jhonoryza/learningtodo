@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { AutoForm } from '@/components/ui/auto-form';
-import { Badge } from '@/components/ui/badge';
+import { AutoForm } from '@/Components/ui/auto-form';
+import { Badge } from '@/Components/ui/badge';
 import {
     Breadcrumb,
     BreadcrumbItem,
@@ -8,11 +8,11 @@ import {
     BreadcrumbList,
     BreadcrumbPage,
     BreadcrumbSeparator,
-} from '@/components/ui/breadcrumb'; /* PartiallyEnd: #3632/scriptSetup.vue */
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Separator } from '@/components/ui/separator';
-import { SidebarTrigger } from '@/components/ui/sidebar'; /* PartiallyEnd: #3632/scriptSetup.vue */
+} from '@/Components/ui/breadcrumb'; /* PartiallyEnd: #3632/scriptSetup.vue */
+import { Button } from '@/Components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/Components/ui/card';
+import { Separator } from '@/Components/ui/separator';
+import { SidebarTrigger } from '@/Components/ui/sidebar'; /* PartiallyEnd: #3632/scriptSetup.vue */
 import {
     Table,
     TableBody,
@@ -21,8 +21,8 @@ import {
     TableHead,
     TableHeader,
     TableRow,
-} from '@/components/ui/table';
-import { useToast } from '@/components/ui/toast/use-toast';
+} from '@/Components/ui/table';
+import { useToast } from '@/Components/ui/toast/use-toast';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, router } from '@inertiajs/vue3';
 import { CircleCheck, Trash2, Undo } from 'lucide-vue-next';

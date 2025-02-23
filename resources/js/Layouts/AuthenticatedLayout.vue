@@ -3,12 +3,12 @@ import { ref } from 'vue';
 
 const showingNavigationDropdown = ref(false);
 
-import AppSidebar from '@/components/AppSidebar.vue';
+import AppSidebar from '@/Components/AppSidebar.vue';
 import {
     SidebarInset,
     SidebarProvider,
-} from '@/components/ui/sidebar'; /* PartiallyEnd: #3632/scriptSetup.vue */
-import Toaster from '@/components/ui/toast/Toaster.vue'
+} from '@/Components/ui/sidebar'; /* PartiallyEnd: #3632/scriptSetup.vue */
+import Toaster from '@/Components/ui/toast/Toaster.vue'
 </script>
 
 <template>
