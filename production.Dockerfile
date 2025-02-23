@@ -1,47 +1,32 @@
-# Stage 1: Composer stage menggunakan image jhonoryza/frankenphp-pgsql:8.2
-FROM jhonoryza/frankenphp-pgsql:8.2 AS composer
+FROM jhonoryza/frankenphp-pgsql:8.2 AS build
 
 WORKDIR /app
 
-# Copy composer.json dan composer.lock
-COPY composer.json composer.lock ./
+COPY . ./
 
-# Install Composer dependencies
+# Install dependencies menggunakan Composer
 RUN composer install --no-dev --optimize-autoloader --no-interaction --no-plugins --no-scripts --prefer-dist
 
-# Stage 2: Bun stage menggunakan image Bun
-FROM node:20 AS node
+# Install Node.js and npm
+RUN curl -fsSL https://nodejs.org/dist/v20.14.0/node-v20.14.0-linux-x64.tar.xz | tar -xJ -C /usr/local --strip-components=1
 
-WORKDIR /app
-
-# Copy application files
-COPY . .
-
-# Copy Composer dependencies dari stage composer
-COPY --from=composer /app/vendor /app/vendor
-
-# Install Node.js dependencies menggunakan Bun
+# Install npm dependencies and build assets
 RUN npm install
-
-# Build the application
 RUN npm run build
 
-# Stage 3: Final stage menggunakan image jhonoryza/frankenphp-pgsql:8.2
+# Final stage
 FROM jhonoryza/frankenphp-pgsql:8.2
 
 WORKDIR /app
 
-# Copy application files
-COPY . .
+COPY . ./
+COPY --from=build /app/public /app/public
 
-# Copy built assets dari stage bun
-COPY --from=node /app/public /app/public
+# Install dependencies menggunakan Composer
+RUN composer install --no-dev --optimize-autoloader --no-interaction --no-plugins --no-scripts --prefer-dist
 
-# Copy Composer dependencies dari stage composer
-COPY --from=composer /app/vendor /app/vendor
-
-# Clean up
-RUN rm -rf .git
+RUN rm -rf /root/.composer
+RUN rm -rf ./git
 
 # Install supervisord
 RUN apt-get update && apt-get install -y supervisor
@@ -49,5 +34,5 @@ RUN apt-get update && apt-get install -y supervisor
 # Copy supervisord configuration
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
-# Set the command to run supervisord
+# Jalankan supervisord dengan konfigurasi yang ditentukan
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
