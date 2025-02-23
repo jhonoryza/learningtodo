@@ -10,7 +10,7 @@ COPY composer.json composer.lock ./
 RUN composer install --no-dev --optimize-autoloader --no-interaction --no-plugins --no-scripts --prefer-dist
 
 # Stage 2: Bun stage menggunakan image Bun
-FROM oven/bun:1 AS bun
+FROM node:20 AS node
 
 WORKDIR /app
 
@@ -21,10 +21,10 @@ COPY . .
 COPY --from=composer /app/vendor /app/vendor
 
 # Install Node.js dependencies menggunakan Bun
-RUN bun install
+RUN npm install
 
 # Build the application
-RUN bun run build
+RUN npm run build
 
 # Stage 3: Final stage menggunakan image jhonoryza/frankenphp-pgsql:8.2
 FROM jhonoryza/frankenphp-pgsql:8.2
@@ -35,7 +35,7 @@ WORKDIR /app
 COPY . .
 
 # Copy built assets dari stage bun
-COPY --from=bun /app/public /app/public
+COPY --from=node /app/public /app/public
 
 # Copy Composer dependencies dari stage composer
 COPY --from=composer /app/vendor /app/vendor
