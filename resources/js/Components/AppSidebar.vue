@@ -46,10 +46,10 @@ const items = [
                 <SidebarMenu>
                     <SidebarMenuItem v-for="item in items" :key="item.title">
                         <SidebarMenuButton asChild>
-                            <a :href="item.url">
+                            <Link :href="item.url">
                                 <component :is="item.icon" />
                                 <span>{{ item.title }}</span>
-                            </a>
+                            </Link>
                         </SidebarMenuButton>
                     </SidebarMenuItem>
                 </SidebarMenu>
@@ -69,9 +69,9 @@ const items = [
                         </DropdownMenuTrigger>
                         <DropdownMenuContent side="top" class="w-[--reka-popper-anchor-width]">
                             <DropdownMenuItem>
-                                <a :href="route('profile.edit')">
+                                <Link :href="route('profile.edit')">
                                     <span>Account</span>
-                                </a>
+                                </Link>
                             </DropdownMenuItem>
                             <DropdownMenuItem>
                                 <a :href="route('logout')">
