@@ -16,7 +16,7 @@ ENV PATH="/root/.bun/bin:${PATH}"
 RUN bun install
 
 # Build the application
-RUN bun build
+RUN bun run build
 
 # Final stage
 FROM jhonoryza/frankenphp-pgsql:8.2
