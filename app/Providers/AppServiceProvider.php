@@ -25,6 +25,7 @@ class AppServiceProvider extends ServiceProvider
         Vite::prefetch(concurrency: 3);
 
         if ($this->app->environment('production') && ! Str::contains(request()->url(), 'local')) {
+            $this->app['request']->server->set('HTTPS','on');
             URL::forceScheme('https');
         }
     }
