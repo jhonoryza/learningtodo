@@ -18,7 +18,8 @@ class TodoController extends Controller
             ->where('user_id', auth()->user()->id)
             ->orderBy('status', 'desc')
             ->orderBy('id', 'asc')
-            ->simplePaginate(5);
+            ->simplePaginate(5)
+            ->withQueryString();
 
         return inertia()
             ->render('Todos/Index', [
