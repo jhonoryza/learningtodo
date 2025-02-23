@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\Todo as EnumsTodo;
 use App\Http\Requests\StoreTodoRequest;
 use App\Http\Requests\UpdateTodoRequest;
 use App\Models\Todo;
@@ -14,8 +15,10 @@ class TodoController extends Controller
     public function index()
     {
         $data = Todo::query()
+            ->where('user_id', auth()->user()->id)
+            ->orderBy('status', 'desc')
             ->orderBy('id', 'asc')
-            ->paginate(10);
+            ->simplePaginate(5);
 
         return inertia()
             ->render('Todos/Index', [
@@ -36,7 +39,12 @@ class TodoController extends Controller
      */
     public function store(StoreTodoRequest $request)
     {
-        //
+        $data = array_merge($request->validated(), [
+            'user_id' => auth()->user()->id,
+            'status' => EnumsTodo::TODO,
+        ]);
+        Todo::query()
+            ->create($data);
     }
 
     /**
@@ -68,6 +76,6 @@ class TodoController extends Controller
      */
     public function destroy(Todo $todo)
     {
-        //
+        $todo->delete();
     }
 }

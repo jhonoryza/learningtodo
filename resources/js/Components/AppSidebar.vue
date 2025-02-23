@@ -55,7 +55,7 @@ const data = {
                 },
                 {
                     title: 'Todo',
-                    url: '#',
+                    url: route('todos.index'),
                 },
             ],
         },

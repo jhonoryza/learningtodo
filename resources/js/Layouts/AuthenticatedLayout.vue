@@ -8,10 +8,12 @@ import {
     SidebarInset,
     SidebarProvider,
 } from '@/components/ui/sidebar'; /* PartiallyEnd: #3632/scriptSetup.vue */
+import Toaster from '@/components/ui/toast/Toaster.vue'
 </script>
 
 <template>
     <SidebarProvider>
+        <Toaster />
         <AppSidebar />
         <SidebarInset>
             <header class="flex h-16 shrink-0 items-center gap-2 border-b px-4" v-if="$slots.header">

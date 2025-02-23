@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Enums\Todo;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreTodoRequest extends FormRequest
 {
@@ -11,7 +13,7 @@ class StoreTodoRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +24,8 @@ class StoreTodoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => ['required', 'min:2'],
+            'url' => ['required', 'min:2', 'url'],
         ];
     }
 }
