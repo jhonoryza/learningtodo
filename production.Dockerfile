@@ -10,7 +10,7 @@ COPY composer.json composer.lock ./
 RUN composer install --no-dev --optimize-autoloader --no-interaction --no-plugins --no-scripts --prefer-dist
 
 # Stage 2: Bun stage menggunakan image Bun
-FROM oven/bun:1.0.27 AS bun
+FROM oven/bun:1.2.0 AS bun
 
 WORKDIR /app
 
