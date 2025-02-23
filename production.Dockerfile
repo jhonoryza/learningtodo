@@ -7,10 +7,15 @@ COPY . ./
 # Install dependencies menggunakan Composer
 RUN composer install --no-dev --optimize-autoloader --no-interaction --no-plugins --no-scripts --prefer-dist
 
-# Install bun
+# Install Bun
+RUN apt-get update && apt-get install -y curl
 RUN curl -fsSL https://bun.sh/install | bash
+ENV PATH="/root/.bun/bin:${PATH}"
 
-RUN bun i
+# Install Node.js dependencies using Bun
+RUN bun install
+
+# Build the application
 RUN bun build
 
 # Final stage
@@ -20,8 +25,6 @@ WORKDIR /app
 
 COPY . ./
 COPY --from=build /app/public /app/public
-COPY --from=build /app/bootstrap/ssr /app/bootstrap/ssr
-COPY --from=build /usr/local/bin/node /usr/local/bin/node
 COPY --from=build /usr/local/lib/node_modules /usr/local/lib/node_modules
 COPY --from=build /app/node_modules /app/node_modules
 
