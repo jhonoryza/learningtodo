@@ -1,38 +1,47 @@
-FROM jhonoryza/frankenphp-pgsql:8.2 AS build
+# Stage 1: Composer stage menggunakan image jhonoryza/frankenphp-pgsql:8.2
+FROM jhonoryza/frankenphp-pgsql:8.2 AS composer
 
 WORKDIR /app
 
-COPY . ./
+# Copy composer.json dan composer.lock
+COPY composer.json composer.lock ./
 
-# Install dependencies menggunakan Composer
+# Install Composer dependencies
 RUN composer install --no-dev --optimize-autoloader --no-interaction --no-plugins --no-scripts --prefer-dist
 
-# Install Bun
-RUN apt-get update && apt-get install -y curl
-RUN curl -fsSL https://bun.sh/install | bash
-ENV PATH="/root/.bun/bin:${PATH}"
+# Stage 2: Bun stage menggunakan image Bun
+FROM oven/bun:1.0.27 AS bun
 
-# Install Node.js dependencies using Bun
+WORKDIR /app
+
+# Copy application files
+COPY . .
+
+# Copy Composer dependencies dari stage composer
+COPY --from=composer /app/vendor /app/vendor
+
+# Install Node.js dependencies menggunakan Bun
 RUN bun install --frozen-lockfile
 
 # Build the application
-RUN bun run build --verbose
+RUN bun run build
 
-# Final stage
+# Stage 3: Final stage menggunakan image jhonoryza/frankenphp-pgsql:8.2
 FROM jhonoryza/frankenphp-pgsql:8.2
 
 WORKDIR /app
 
-COPY . ./
-COPY --from=build /app/public /app/public
-COPY --from=build /usr/local/lib/node_modules /usr/local/lib/node_modules
-COPY --from=build /app/node_modules /app/node_modules
+# Copy application files
+COPY . .
 
-# Install dependencies menggunakan Composer
-RUN composer install --no-dev --optimize-autoloader --no-interaction --no-plugins --no-scripts --prefer-dist
+# Copy built assets dari stage bun
+COPY --from=bun /app/public /app/public
 
-RUN rm -rf /root/.composer
-RUN rm -rf ./git
+# Copy Composer dependencies dari stage composer
+COPY --from=composer /app/vendor /app/vendor
+
+# Clean up
+RUN rm -rf .git
 
 # Install supervisord
 RUN apt-get update && apt-get install -y supervisor
@@ -40,5 +49,5 @@ RUN apt-get update && apt-get install -y supervisor
 # Copy supervisord configuration
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
-# Jalankan supervisord dengan konfigurasi yang ditentukan
+# Set the command to run supervisord
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
