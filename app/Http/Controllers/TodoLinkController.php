@@ -8,7 +8,7 @@ use App\Http\Requests\StoreTodoRequest;
 use App\Http\Requests\UpdateTodoRequest;
 use App\Models\Todo;
 
-class TodoController extends Controller
+class TodoLinkController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -24,7 +24,7 @@ class TodoController extends Controller
             ->withQueryString();
 
         return inertia()
-            ->render('Todos/Index', [
+            ->render('Todos/Link', [
                 'todos' => inertia()->always(fn() => $data),
             ]);
     }
