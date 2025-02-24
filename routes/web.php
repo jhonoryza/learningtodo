@@ -27,4 +27,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::get('/policy', [App\Http\Controllers\PolicyController::class, 'privacy'])->name('policy');
+Route::get('/tos', [App\Http\Controllers\PolicyController::class, 'terms'])->name('tos');
 require __DIR__.'/auth.php';
