@@ -1,0 +1,1 @@
+import{_ as r}from"./_plugin-vue_export-helper-DlAUqK2U.js";import{c,o as e}from"./app-D5nqOm9U.js";const n={},t=["src"];function s(o,_){return e(),c("img",{src:o.$page.props.logo,alt:"learning_todo_logo"},null,8,t)}const p=r(n,[["render",s]]);export{p as A};
