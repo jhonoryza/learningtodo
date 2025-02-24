@@ -27,6 +27,7 @@ import { useToast } from '@/components/ui/toast/use-toast';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, router } from '@inertiajs/vue3';
 import { CircleCheck, Trash2, Undo } from 'lucide-vue-next';
+import { ref } from 'vue';
 import * as z from 'zod';
 
 const { toast } = useToast();
@@ -37,7 +38,7 @@ defineProps({
 
 const setDone = (id) => {
     router.put(
-        route('todolinks.update', id),
+        route('todonotes.update', id),
         {
             status: 'done',
         },
@@ -61,7 +62,7 @@ const setDone = (id) => {
 };
 const setUndo = (id) => {
     router.put(
-        route('todolinks.update', id),
+        route('todonotes.update', id),
         {
             status: 'todo',
         },
@@ -85,7 +86,7 @@ const setUndo = (id) => {
 };
 
 const setDelete = (id) => {
-    router.delete(route('todolinks.destroy', id), {
+    router.delete(route('todonotes.destroy', id), {
         preserveState: true,
         preserveScroll: true,
         onSuccess: () => {
@@ -118,17 +119,19 @@ const schema = z.object({
         .min(2, {
             message: 'todo name must be at least 2 characters.',
         }),
-    url: z
+    notes: z
         .string({
-            required_error: 'url is required.',
+            required_error: 'notes is required.',
         })
         .min(2, {
-            message: 'url must be at least 2 characters.',
+            message: 'notes must be at least 2 characters.',
         }),
 });
 
+const form = ref(null);
+
 const onSubmit = (values) => {
-    router.post(route('todolinks.store'), values, {
+    router.post(route('todonotes.store'), values, {
         preserveScroll: true,
         preserveState: true,
         onSuccess: () => {
@@ -136,9 +139,10 @@ const onSubmit = (values) => {
                 title: 'Todo Created',
                 description: 'Todo has been created successfully',
             });
-            // clear input
-            values.name = '';
-            values.url = '';
+            // Reset the form
+            if (form.value) {
+                form.value.reset();
+            }
         },
         onError: (err) => {
             toast({
@@ -166,14 +170,14 @@ const onSubmit = (values) => {
                     </BreadcrumbItem>
                     <BreadcrumbSeparator />
                     <BreadcrumbItem>
-                        <BreadcrumbPage>Links</BreadcrumbPage>
+                        <BreadcrumbPage>Notes</BreadcrumbPage>
                     </BreadcrumbItem>
                 </BreadcrumbList>
             </Breadcrumb>
         </template>
         <div class="mx-auto max-w-7xl space-y-6 sm:px-6 lg:px-8">
             <Table>
-                <TableCaption>A list of your recent links.</TableCaption>
+                <TableCaption>A list of your recent notes.</TableCaption>
                 <TableHeader>
                     <TableRow>
                         <TableHead> ID </TableHead>
@@ -196,13 +200,6 @@ const onSubmit = (values) => {
                                     {{ todo.status }}
                                 </Badge>
                             </div>
-                            <a
-                                :href="todo.url"
-                                target="_blank"
-                                class="text-blue-600 underline hover:text-blue-800"
-                            >
-                                {{ todo.url }}
-                            </a>
                         </TableCell>
                         <TableCell class="text-right">
                             <Button
@@ -275,10 +272,11 @@ const onSubmit = (values) => {
 
             <Card>
                 <CardHeader>
-                    <CardTitle> Add Link</CardTitle>
+                    <CardTitle> Add Note</CardTitle>
                 </CardHeader>
                 <CardContent>
                     <AutoForm
+                        :ref="form"
                         class="w-2/3 space-y-6"
                         :schema="schema"
                         :field-config="{
@@ -288,8 +286,9 @@ const onSubmit = (values) => {
                                     required: true,
                                 },
                             },
-                            url: {
-                                label: 'URL',
+                            notes: {
+                                label: 'Notes',
+                                component: 'textarea',
                                 inputProps: {
                                     required: true,
                                 },

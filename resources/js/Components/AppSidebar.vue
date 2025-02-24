@@ -54,8 +54,12 @@ const data = {
                     url: route('dashboard'),
                 },
                 {
-                    title: 'Todo Links',
-                    url: route('todos.index'),
+                    title: 'Link',
+                    url: route('todolinks.index'),
+                },
+                {
+                    title: 'Note',
+                    url: route('todonotes.index'),
                 },
             ],
         },

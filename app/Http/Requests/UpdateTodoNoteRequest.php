@@ -2,11 +2,9 @@
 
 namespace App\Http\Requests;
 
-use App\Enums\Status;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
-class UpdateTodoRequest extends FormRequest
+class UpdateTodoNoteRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +22,8 @@ class UpdateTodoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'status' => ['required', Rule::enum(Status::class)],
+            'name' => ['required', 'min:2'],
+            'notes' => ['required', 'min:2'],
         ];
     }
 }

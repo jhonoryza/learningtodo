@@ -3,6 +3,7 @@
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TodoLinkController;
+use App\Http\Controllers\TodoNoteController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -15,7 +16,8 @@ Route::get('/', function () {
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', DashboardController::class)->name('dashboard');
-    Route::resource('todos', TodoLinkController::class);
+    Route::resource('todolinks', TodoLinkController::class);
+    Route::resource('todonotes', TodoNoteController::class);
 });
 
 

@@ -10,10 +10,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Todo extends Model
 {
     protected $fillable = [
-        'name',
-        'url',
-        'status',
         'user_id',
+        'name',
+        'type',
+        'status',
+        'url',
+        'notes',
     ];
 
     protected $appends = [

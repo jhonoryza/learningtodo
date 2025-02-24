@@ -4,12 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Enums\Status;
 use App\Enums\Type;
-use App\Http\Requests\StoreTodoLinkRequest;
-use App\Http\Requests\UpdateTodoLinkRequest;
+use App\Http\Requests\StoreTodoNoteRequest;
+use App\Http\Requests\UpdateTodoNoteRequest;
 use App\Models\Todo;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
-class TodoLinkController extends Controller
+class TodoNoteController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,14 +20,14 @@ class TodoLinkController extends Controller
         Gate::authorize('viewAny', Todo::class);
         $data = Todo::query()
             ->where('user_id', auth()->user()->id)
-            ->where('type', Type::LINK)
+            ->where('type', Type::NOTES)
             ->orderBy('status', 'desc')
             ->orderBy('id', 'asc')
             ->simplePaginate(5)
             ->withQueryString();
 
         return inertia()
-            ->render('Todos/Link', [
+            ->render('Todos/Note', [
                 'todos' => inertia()->always(fn() => $data),
             ]);
     }
@@ -42,12 +43,13 @@ class TodoLinkController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreTodoLinkRequest $request)
+    public function store(StoreTodoNoteRequest $request)
     {
         Gate::authorize('create', Todo::class);
         $data = array_merge($request->validated(), [
             'user_id' => auth()->user()->id,
             'status' => Status::TODO,
+            'type' => Type::NOTES,
         ]);
         Todo::query()
             ->create($data);
@@ -56,7 +58,7 @@ class TodoLinkController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Todo $todolink)
+    public function show(Todo $todonote)
     {
         //
     }
@@ -64,7 +66,7 @@ class TodoLinkController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Todo $todolink)
+    public function edit(Todo $todonote)
     {
         //
     }
@@ -72,18 +74,18 @@ class TodoLinkController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateTodoLinkRequest $request, Todo $todolink)
+    public function update(UpdateTodoNoteRequest $request, Todo $todonote)
     {
-        Gate::authorize('update', $todolink);
-        $todolink->update($request->validated());
+        Gate::authorize('update', $todonote);
+        $todonote->update($request->validated());
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Todo $todolink)
+    public function destroy(Todo $todonote)
     {
-        Gate::authorize('delete', $todolink);
-        $todolink->delete();
+        Gate::authorize('delete', $todonote);
+        $todonote->delete();
     }
 }
