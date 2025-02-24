@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\Todo as EnumsTodo;
+use App\Enums\Status;
+use App\Enums\Type;
 use App\Http\Requests\StoreTodoRequest;
 use App\Http\Requests\UpdateTodoRequest;
 use App\Models\Todo;
@@ -16,6 +17,7 @@ class TodoController extends Controller
     {
         $data = Todo::query()
             ->where('user_id', auth()->user()->id)
+            ->where('type', Type::LINK)
             ->orderBy('status', 'desc')
             ->orderBy('id', 'asc')
             ->simplePaginate(5)
@@ -42,7 +44,7 @@ class TodoController extends Controller
     {
         $data = array_merge($request->validated(), [
             'user_id' => auth()->user()->id,
-            'status' => EnumsTodo::TODO,
+            'status' => Status::TODO,
         ]);
         Todo::query()
             ->create($data);

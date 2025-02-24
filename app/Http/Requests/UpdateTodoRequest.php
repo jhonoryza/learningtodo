@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-use App\Enums\Todo;
+use App\Enums\Status;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -24,7 +24,7 @@ class UpdateTodoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'status' => ['required', Rule::enum(Todo::class)],
+            'status' => ['required', Rule::enum(Status::class)],
         ];
     }
 }

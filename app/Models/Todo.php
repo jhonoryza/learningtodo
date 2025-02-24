@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Enums\Todo as EnumsTodo;
+use App\Enums\Status;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -28,7 +28,7 @@ class Todo extends Model
     protected function isDone(): Attribute
     {
         return Attribute::make(
-            get: fn() => $this->status === EnumsTodo::DONE->value,
+            get: fn() => $this->status === Status::DONE->value,
         );
     }
 }

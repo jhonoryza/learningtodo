@@ -13,6 +13,7 @@ import { Head } from '@inertiajs/vue3';
 
 defineProps({
     todoLinks: Number,
+    todoNotes: Number,
 });
 </script>
 
@@ -83,7 +84,7 @@ defineProps({
                         </svg>
                     </CardHeader>
                     <CardContent>
-                        <div class="text-2xl font-bold">0</div>
+                        <div class="text-2xl font-bold">{{ todoNotes }}</div>
                         <p class="text-xs text-muted-foreground">Todo</p>
                     </CardContent>
                 </Card>

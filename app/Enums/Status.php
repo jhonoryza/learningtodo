@@ -2,7 +2,7 @@
 
 namespace App\Enums;
 
-enum Todo: string
+enum Status: string
 {
     case TODO = 'todo';
     case DONE = 'done';

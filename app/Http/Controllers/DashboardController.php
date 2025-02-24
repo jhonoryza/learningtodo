@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\Todo as EnumsTodo;
+use App\Enums\Status;
+use App\Enums\Type;
 use App\Models\Todo;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -15,10 +16,16 @@ class DashboardController extends Controller
     public function __invoke(Request $request)
     {
         $todoLinks = Todo::query()
-            ->where('status', EnumsTodo::TODO)
+            ->where('status', Status::TODO)
+            ->where('type', Type::LINK)
+            ->count();
+        $todoNotes = Todo::query()
+            ->where('status', Status::TODO)
+            ->where('type', Type::NOTES)
             ->count();
         return Inertia::render('Dashboard', [
-            'todoLinks' => $todoLinks
+            'todoLinks' => $todoLinks,
+            'todoNotes' => $todoNotes,
         ]);
     }
 }
