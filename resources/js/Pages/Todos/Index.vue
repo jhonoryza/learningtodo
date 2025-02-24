@@ -1,4 +1,5 @@
-<script setup lang="ts">
+<!-- eslint-disable prettier/prettier -->
+<script setup>
 import { AutoForm } from '@/components/ui/auto-form';
 import { Badge } from '@/components/ui/badge';
 import {
@@ -82,24 +83,21 @@ const setUndo = (id) => {
 };
 
 const setDelete = (id) => {
-    router.delete(
-        route('todos.destroy', id),
-        {
-            preserveScroll: true,
-            onSuccess: () => {
-                toast({
-                    title: `Todo ${id} Deleted`,
-                    description: 'Todo has been deleted successfully',
-                });
-            },
-            onError: (err) => {
-                toast({
-                    title: 'Todo failed to update',
-                    description: err,
-                });
-            },
+    router.delete(route('todos.destroy', id), {
+        preserveScroll: true,
+        onSuccess: () => {
+            toast({
+                title: `Todo ${id} Deleted`,
+                description: 'Todo has been deleted successfully',
+            });
         },
-    );
+        onError: (err) => {
+            toast({
+                title: 'Todo failed to update',
+                description: err,
+            });
+        },
+    });
 };
 
 const goToLink = (link) => {
@@ -126,7 +124,7 @@ const schema = z.object({
         }),
 });
 
-const onSubmit = (values: Record<string, any>) => {
+const onSubmit = (values) => {
     router.post(route('todos.store'), values, {
         preserveScroll: true,
         preserveState: true,
@@ -147,7 +145,6 @@ const onSubmit = (values: Record<string, any>) => {
 </script>
 
 <template>
-
     <Head title="Profile" />
 
     <AuthenticatedLayout>
@@ -163,45 +160,18 @@ const onSubmit = (values: Record<string, any>) => {
                     </BreadcrumbItem>
                     <BreadcrumbSeparator />
                     <BreadcrumbItem>
-                        <BreadcrumbPage>Todo</BreadcrumbPage>
+                        <BreadcrumbPage>Todo Links</BreadcrumbPage>
                     </BreadcrumbItem>
                 </BreadcrumbList>
             </Breadcrumb>
         </template>
         <div class="mx-auto max-w-7xl space-y-6 sm:px-6 lg:px-8">
-            <Card>
-                <CardHeader>
-                    <CardTitle> Add TODO </CardTitle>
-                </CardHeader>
-                <CardContent>
-                    <AutoForm class="w-2/3 space-y-6" :schema="schema" :field-config="{
-                        name: {
-                            label: 'Name',
-                            component: 'textarea',
-                            inputProps: {
-                                required: true,
-                            },
-                        },
-                        url: {
-                            label: 'URL',
-                            inputProps: {
-                                required: true,
-                            },
-                        },
-                    }" @submit="onSubmit">
-                        <Button type="submit"> Save </Button>
-                    </AutoForm>
-                </CardContent>
-            </Card>
-
             <Table>
-                <TableCaption>A list of your recent todo.</TableCaption>
+                <TableCaption>A list of your recent todo links.</TableCaption>
                 <TableHeader>
                     <TableRow>
                         <TableHead> ID </TableHead>
                         <TableHead> Name </TableHead>
-                        <TableHead>Status</TableHead>
-                        <TableHead>Link</TableHead>
                         <TableHead class="text-right"> Action </TableHead>
                     </TableRow>
                 </TableHeader>
@@ -210,36 +180,65 @@ const onSubmit = (values: Record<string, any>) => {
                         <TableCell>
                             {{ todo.id }}
                         </TableCell>
-                        <TableCell class="font-medium">
+                        <TableCell class="flex flex-col gap-2 font-medium">
                             {{ todo.name }}
-                        </TableCell>
-                        <TableCell>
-                            <Badge v-if="todo.is_done">
-                                {{ todo.status }}
-                            </Badge>
-                            <Badge v-else variant="destructive">
-                                {{ todo.status }}
-                            </Badge>
-                        </TableCell>
-                        <TableCell>
-                            <a :href="todo.url" target="_blank" class="text-blue-600 underline hover:text-blue-800">
+                            <div>
+                                <Badge v-if="todo.is_done">
+                                    {{ todo.status }}
+                                </Badge>
+                                <Badge v-else variant="destructive">
+                                    {{ todo.status }}
+                                </Badge>
+                            </div>
+                            <a
+                                :href="todo.url"
+                                target="_blank"
+                                class="text-blue-600 underline hover:text-blue-800"
+                            >
                                 {{ todo.url }}
                             </a>
                         </TableCell>
                         <TableCell class="text-right">
-                            <Button variant="destructive" v-if="todo.is_done" @click="setUndo(todo.id)">
-                                <div class="flex size-6 items-center justify-center rounded-sm border">
-                                    <component :is="Undo" class="size-4 shrink-0" />
+                            <Button
+                                variant="destructive"
+                                v-if="todo.is_done"
+                                @click="setUndo(todo.id)"
+                            >
+                                <div
+                                    class="flex size-6 items-center justify-center rounded-sm border"
+                                >
+                                    <component
+                                        :is="Undo"
+                                        class="size-4 shrink-0"
+                                    />
                                 </div>
                             </Button>
-                            <Button variant="destructive" v-else @click="setDone(todo.id)">
-                                <div class="flex size-6 items-center justify-center rounded-sm border">
-                                    <component :is="CircleCheck" class="size-4 shrink-0" />
+                            <Button
+                                variant="destructive"
+                                v-else
+                                @click="setDone(todo.id)"
+                            >
+                                <div
+                                    class="flex size-6 items-center justify-center rounded-sm border"
+                                >
+                                    <component
+                                        :is="CircleCheck"
+                                        class="size-4 shrink-0"
+                                    />
                                 </div>
                             </Button>
-                            <Button variant="destructive" @click="setDelete(todo.id)" class="ml-2">
-                                <div class="flex size-6 items-center justify-center rounded-sm border">
-                                    <component :is="Trash2" class="size-4 shrink-0" />
+                            <Button
+                                variant="destructive"
+                                @click="setDelete(todo.id)"
+                                class="ml-2"
+                            >
+                                <div
+                                    class="flex size-6 items-center justify-center rounded-sm border"
+                                >
+                                    <component
+                                        :is="Trash2"
+                                        class="size-4 shrink-0"
+                                    />
                                 </div>
                             </Button>
                         </TableCell>
@@ -249,16 +248,54 @@ const onSubmit = (values: Record<string, any>) => {
 
             <div class="flex items-center justify-end space-x-2 py-4">
                 <div class="space-x-2">
-                    <Button variant="outline" size="sm" :disabled="!todos.prev_page_url"
-                        @click="goToLink(todos.prev_page_url)">
+                    <Button
+                        variant="outline"
+                        size="sm"
+                        :disabled="!todos.prev_page_url"
+                        @click="goToLink(todos.prev_page_url)"
+                    >
                         Previous
                     </Button>
-                    <Button variant="outline" size="sm" :disabled="!todos.next_page_url"
-                        @click="goToLink(todos.next_page_url)">
+                    <Button
+                        variant="outline"
+                        size="sm"
+                        :disabled="!todos.next_page_url"
+                        @click="goToLink(todos.next_page_url)"
+                    >
                         Next
                     </Button>
                 </div>
             </div>
+
+            <Card>
+                <CardHeader>
+                    <CardTitle> Add Todo Link</CardTitle>
+                </CardHeader>
+                <CardContent>
+                    <AutoForm
+                        class="w-2/3 space-y-6"
+                        :schema="schema"
+                        :field-config="{
+                            name: {
+                                label: 'Name',
+                                component: 'textarea',
+                                inputProps: {
+                                    required: true,
+                                },
+                            },
+                            url: {
+                                label: 'URL',
+                                inputProps: {
+                                    required: true,
+                                },
+                            },
+                        }"
+                        @submit="onSubmit"
+                    >
+                        <Button type="submit"> Save </Button>
+                    </AutoForm>
+                </CardContent>
+            </Card>
         </div>
     </AuthenticatedLayout>
 </template>
