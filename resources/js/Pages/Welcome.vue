@@ -211,6 +211,12 @@ defineProps({
                             </div>
                         </div>
                     </div>
+                    <nav
+                        class="mt-4 flex items-center gap-4 text-sm text-primary underline"
+                    >
+                        <a :href="route('policy')">Privacy Policy</a>
+                        <a :href="route('tos')">Terms & Condition</a>
+                    </nav>
                 </main>
 
                 <footer
